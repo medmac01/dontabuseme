@@ -31,8 +31,10 @@ if [ ${REPLY} -eq 3 ]
 then
     echo "Goodbye!";
     exit
-elif [ ${REPLY} -eq 2 ]
+elif [ ${REPLY} -eq 1 ]
 then
+    RED="\e[31m"
+    ENDCOLOR="\e[0m"
     clear
     read -s -p "Path for log file :"
     cat ${REPLY} | cut -d ' ' -f 1 | tee out.txt
@@ -42,7 +44,12 @@ then
     while IFS= read line
     do
         # display $line or do something with $line
-        curl -G https://api.abuseipdb.com/api/v2/check \--data-urlencode "ipAddress=${line}" \-d maxAgeInDays=90 \-d verbose \-H "Key: ${apiKey}" \-H "Accept: application/json" | tee -a report.txt;
+        content=$(curl -G https://api.abuseipdb.com/api/v2/check \--data-urlencode "ipAddress=${line}" \-d maxAgeInDays=90 \-d verbose \-H "Key: ${apiKey}" \-H "Accept: application/json")
+        abuseScore=$( jq --compact-output '.data.abuseConfidenceScore' <<< "${content}");
+        if [ "$abuseScore" -gt 25 ]
+        then
+            echo -e "--> ${line}" | tee -a report.txt;
+        fi
     done <"$file"
     clear
     echo "Test Succeeded ! Report generated in report.txt"
