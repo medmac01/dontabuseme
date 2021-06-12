@@ -34,5 +34,18 @@ then
 elif [ ${REPLY} -eq 2 ]
 then
     clear
-    
+    read -s -p "Path for log file :"
+    cat ${REPLY} | cut -d ' ' -f 1 | tee out.txt
+    clear
+    apiKey="4d96b3a082572eecd3c693dd235699d47f164bd471e29a19831dac4b06c76b08fba12b3148e755c7"
+    file="out.txt"
+    while IFS= read line
+    do
+        # display $line or do something with $line
+        curl -G https://api.abuseipdb.com/api/v2/check \--data-urlencode "ipAddress=${line}" \-d maxAgeInDays=90 \-d verbose \-H "Key: ${apiKey}" \-H "Accept: application/json" | tee -a report.txt;
+    done <"$file"
+    clear
+    echo "Test Succeeded ! Report generated in report.txt"
+
+
 fi
