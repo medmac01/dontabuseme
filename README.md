@@ -1,11 +1,11 @@
 # DontAbuseMe 😈
 
 Authors:
-@medmac01
-@helooom
+[@medmac01](https://github.com/medmac01)
+[@helooom](https://github.com/helooom)
 
 Credits:
-@hichammoad
+[@hichammoad](https://github.com/hichammoad)
 
 Twitter:
 https://twitter.com/medmac01
