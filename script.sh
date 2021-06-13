@@ -52,7 +52,7 @@ echo "1. Check a log file for suspecious attacks";
 echo "2. About Us";
 echo "3. Exit";
 
-read -s -p "Choose from the menu above :"
+read -p "Choose from the menu above :"
 
 if [ ${REPLY} -eq 3 ]
 then
@@ -63,7 +63,7 @@ then
     RED="\e[31m"
     ENDCOLOR="\e[0m"
     clear
-    read -s -p "Path for log file :"
+    read -p "Path for log file :"
     cat ${REPLY} | cut -d ' ' -f 1 | tee out.txt
     clear
     apiKey="4d96b3a082572eecd3c693dd235699d47f164bd471e29a19831dac4b06c76b08fba12b3148e755c7"
