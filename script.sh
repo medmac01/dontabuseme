@@ -1,4 +1,31 @@
 #!/bin/bash
+
+if [ $1 = "-h" ]
+then
+    clear
+    more README.md;
+    exit
+fi
+
+if [ $1 = "-p" ]
+then
+    if [ $2 = "" ]
+    then
+        echo "You need to specify an IP Address , -h for help";
+    else
+        apiKey="4d96b3a082572eecd3c693dd235699d47f164bd471e29a19831dac4b06c76b08fba12b3148e755c7"
+        content=$(curl -G https://api.abuseipdb.com/api/v2/check \--data-urlencode "ipAddress=$2" \-d maxAgeInDays=90 \-d verbose \-H "Key: ${apiKey}" \-H "Accept: application/json")
+        abuseScore=$( jq --compact-output '.data.abuseConfidenceScore' <<< "${content}");
+        if [ "$abuseScore" -gt 25 ]
+        then
+            echo "> Your IP : $2 is suspecious"
+            exit
+        else
+            echo "> Your IP : $2 is safe"
+            exit
+        fi
+    fi
+fi
 clear
 echo "";
 echo "";
@@ -57,7 +84,8 @@ then
         testedIPCount=$((testedIPCount+1));
     done <"$file"
     clear
-    echo "Scanning finished, found ${blacklistedIPCount} Suspecious IPs out of ${testedIPCount}." | tee -a report.txt
+    percentage=$((blacklistedIPCount*100/testedIPCount))
+    echo "Scanning finished, found ${blacklistedIPCount} Suspecious IPs out of ${testedIPCount}. $percentage%" | tee -a report.txt
     echo "Do you want to block traffic from them ? [(Y)es/(N)o]"
     read rep
 
