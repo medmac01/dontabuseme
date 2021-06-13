@@ -21,6 +21,19 @@ DontAbuseMe is a simple Bash script for blocking offensive attacks using AbuselP
 
 Install it from [here](https://stedolan.github.io/jq/download/)
 
+2. Curl
+
+  For Linux
+
+```
+sudo apt install curl
+```
+
+  For macOS
+
+```
+brew install curl
+```
 
 **Usage:**
 
