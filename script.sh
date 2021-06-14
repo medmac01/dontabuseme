@@ -13,7 +13,7 @@ then
     then
         echo "You need to specify an IP Address , -h for help";
     else
-        apiKey="4d96b3a082572eecd3c693dd235699d47f164bd471e29a19831dac4b06c76b08fba12b3148e755c7"
+        apiKey="$( cat config )"
         content=$(curl -G https://api.abuseipdb.com/api/v2/check \--data-urlencode "ipAddress=$2" \-d maxAgeInDays=90 \-d verbose \-H "Key: ${apiKey}" \-H "Accept: application/json")
         abuseScore=$( jq --compact-output '.data.abuseConfidenceScore' <<< "${content}");
         if [ "$abuseScore" -gt 25 ]
@@ -66,7 +66,7 @@ then
     read -p "Path for log file :"
     cat ${REPLY} | cut -d ' ' -f 1 | tee out.txt
     clear
-    apiKey="4d96b3a082572eecd3c693dd235699d47f164bd471e29a19831dac4b06c76b08fba12b3148e755c7"
+    apiKey="$( cat config )"
     testedIPCount=0
     blacklistedIPCount=0
     file="out.txt"
