@@ -37,6 +37,10 @@ brew install curl
 
 **Usage:**
 
+First, you need to sign up in [AbuselPDB](https://www.abuseipdb.com/account/api) to get a free API Key.
+
+After you get your free API Key , you need to put in the *config* file.
+
 ```
 git clone https://github.com/medmac01/dontabuseme.git
 cd dontabuseme
