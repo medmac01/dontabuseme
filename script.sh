@@ -69,6 +69,7 @@ then
     apiKey="$( cat config )"
     testedIPCount=0
     blacklistedIPCount=0
+    echo "" | tee blacklisted.txt
     file="out.txt"
     while IFS= read line
     do
@@ -86,6 +87,8 @@ then
     clear
     percentage=$((blacklistedIPCount*100/testedIPCount))
     echo "" | tee report.txt;
+    echo "Scan Date : $(date)" | tee -a report.txt
+    echo ""
     echo "Scanning finished, found ${blacklistedIPCount} Suspecious IPs out of ${testedIPCount}. $percentage%" | tee -a report.txt
     echo "Do you want to block traffic from them ? [(Y)es/(N)o]"
     read rep
@@ -106,10 +109,14 @@ then
 
     if [ $rep = "" ] || [ $rep = "Y" ] || [ $rep = "y" ]
     then
+        echo " " | tee -a report.txt
+        echo "Sincerely" | tee -a report.txt
+        echo "DontAbuseMe Team" | tee -a report.txt
+        clear
         echo "Type your mail address: "
         read mailaddress
 
-        cat report.txt | sendmail $mailaddress
+        cat report.txt | sendmail $mailaddress -F "DontAbuseMe"
         echo "Report generated in report.txt and mail sent to : $mailaddress";
     else
         echo "Report generated in report.txt";
