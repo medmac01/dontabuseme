@@ -85,6 +85,7 @@ then
     done <"$file"
     clear
     percentage=$((blacklistedIPCount*100/testedIPCount))
+    echo "" | tee report.txt;
     echo "Scanning finished, found ${blacklistedIPCount} Suspecious IPs out of ${testedIPCount}. $percentage%" | tee -a report.txt
     echo "Do you want to block traffic from them ? [(Y)es/(N)o]"
     read rep
@@ -100,8 +101,19 @@ then
 
     fi
 
-    
-    echo "Report generated in report.txt"
+    echo "Do you want to send a report to your mail ? [(Y)es/(N)o]"
+    read rep
+
+    if [ $rep = "" ] || [ $rep = "Y" ] || [ $rep = "y" ]
+    then
+        echo "Type your mail address: "
+        read mailaddress
+
+        cat report.txt | sendmail $mailaddress
+        echo "Report generated in report.txt and mail sent to : $mailaddress";
+    else
+        echo "Report generated in report.txt";
+    fi
 
 
 fi
