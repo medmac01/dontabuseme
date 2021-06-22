@@ -1,1 +1,11 @@
 config
+-d
+--data-urlencode
+-H
+25
+logModified.log
+out.txt
+report.txt
+blacklisted.txt
+.vscode
+*.DS_Store
