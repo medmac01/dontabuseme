@@ -40,6 +40,8 @@ First, you need to sign up in [AbuselPDB](https://www.abuseipdb.com/account/api)
 
 After you get your free API Key , you need to put in the *config* file.
 
+Send report to mail feature requires *ssmtp* server configured and *sendmail* installed in your machine.
+
 **Usage:**
 
 ```
@@ -48,6 +50,11 @@ cd dontabuseme
 bash script.sh
 
 ```
+
+-p [IPAddress] : scans an IPAddress using the API
+
+
+
 
 Happy surfing! 
 
